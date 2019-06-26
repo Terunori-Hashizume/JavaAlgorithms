@@ -1,15 +1,21 @@
 package graph;
 
-class UnionFind {
-    private int[] rank, parent;
+public class UnionFind {
+    private int[] rank, parent, size;
 
-    public UnionFind(int size) {
-        this.rank = new int[size];
-        this.parent = new int[size];
-        for (int i = 0; i < size; ++i) {
+    public UnionFind(int n) {
+        this.rank = new int[n];
+        this.parent = new int[n];
+        this.size = new int[n];
+        for (int i = 0; i < n; ++i) {
             parent[i] = i;
             rank[i] = 0;
+            size[i] = 1;
         }
+    }
+
+    public int getSize(int x) {
+        return size[root(x)];
     }
 
     public boolean same(int x, int y) {
@@ -29,6 +35,8 @@ class UnionFind {
         parent[b] = a;
         if (rank[a] == rank[b])
             rank[a]++;
+
+        size[a] += size[b];
     }
 
     public int root(int x) {
